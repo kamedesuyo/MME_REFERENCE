@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MME Documents</title>
+    <link rel="stylesheet" href="css/style-sheet.css">
+</head>
+
+<body>
+    <nav>
+        <a href="REFERENCE.html" id="top" style="color: aliceblue;">MME REFERENCE</a>
+        <h1>目次</h1>
+        <a href="sections/section1.html" class="mainsection">1.テクニックとパス</a>
+        <a href="sections/section1.html#section1_1">1.1 構成</a>
+        <a href="sections/section1.html#section1_2">1.2 テクニックのアノテーション</a>
+        <a href="sections/section2.html" class="mainsection">2.パラメータのセマンティクスとアノテーション</a>
+        <a href="sections/section2.html#section2_1">2.1 ジオメトリ変換</a>
+        <a href="sections/section2.html#section2_2">2.2 ライトとマテリアル</a>
+        <a href="sections/section2.html#section2_3">2.3 スクリーン情報</a>
+        <a href="sections/section2.html#section2_4">2.4 時間</a>
+        <a href="sections/section2.html#section2_5">2.5 マウス</a>
+        <a href="sections/section2.html#section2_6">2.6 コントロールオブジェクト</a>
+        <a href="sections/section2.html#section2_7">2.7 テクスチャ関連</a>
+        <a href="sections/section2.html#section2_8">2.8 エフェクトファイル</a>
+        <a href="sections/section2.html#section2_9">2.9 特殊パラメータ</a>
+        <a href="sections/section2.html#section2_10">2.10 頂点シェーダセマンティクス</a>
+        <a href="sections/section2.html#section2_11">2.11 マクロ</a>
+        <a href="sections/section3.html" class="mainsection">3.スクリプト</a>
+        <a href="sections/section3.html#section3_1">3.1 コマンド</a>
+        <a href="sections/section4.html" class="mainsection">4.Tips</a>
+        <a href="sections/section4.html#section_4_1">4.1 MMD標準のシェーダを使用する</a>
+        <a href="sections/section4.html#section_4_2">4.2 空のテクニック</a>
+        <a href="sections/section4.html#section_4_3">4.3 オブジェクトの有無でパスをON/OFF</a>
+        <a href="sections/section4.html#section_4_4">4.4 エフェクトファイル間でパラメータを共有</a>
+        <a href="sections/section4.html#section_4_5">4.5 if文</a>
+        <a href="sections/section4.html#section_4_6">4.6 uniformキーワード</a>
+        <a href="sections/section4.html#section_4_7">4.7 エフェクトファイル内での日本語使用</a>
+        <a href="sections/section4.html#section_4_8">4.8 ポストエフェクト</a>
+    </nav>
+    <main>
+        <h1>MMEffect リファレンス</h1>
+        <h2>注意</h2>
+        <ul>
+            <li>このリファレンスでは、<strong><a href="">MMEffectが認識するセマンティクス＆アノテーションについて解説している。</strong></a>エフェクトファイルそのもののリファレンスについては、以下を参照のこと。
+            </li>
+
+            <li><a href="http://msdn.microsoft.com/ja-jp/library/bb173005(v=VS.85).aspx">エフェクトファイルフォーマット </a>
+            </li>
+            <li><a href="http://msdn.microsoft.com/ja-jp/library/bb509638(v=VS.85).aspx">HLSLのリファレンス</a>
+            </li>
+
+            <li>セマンティクス＆アノテーションの仕様の策定は、NVIDIAの<a
+                    href="http://developer.nvidia.com/object/using_sas.html">SAS</a>を参考にした。<br>
+                MMEffectが認識するセマンティクス＆アノテーションについて解説しているただしこれは、FX Composer用のエフェクトファイルが動作することを保障するものではない。</li>
+        </ul>
+        <h2>Release</h2>
+        <p><strong>● 0.1.0.0</strong> (2010/9/18) 初版</p>
+        <p><strong>● 0.2.0.0</strong> (2010/12/12) MME Ver0.20</p>
+        <ul>
+            <li>OFFSCREENRENDERTARGETセマンティクス追加</li>
+            <li>CONTROLOBJECTセマンティクスで取得できる情報の追加</li>
+            <li>CONTROLOBJECTセマンティクスが参照するオブジェクトの描画順序の制約を緩和</li>
+            <li>EDGECOLORセマンティクス追加</li>
+            <li>VIEWPORTPIXELSIZEセマンティクスの記述ミスを修正</li>
+            <li>一部日本語修正</li>
+        </ul>
+        <p><strong>● 0.2.2.0</strong> (2010/12/16) MME Ver0.22</p>
+        <ul>
+            <li>RENDERCOLORTARGETおよびOFFSCREENRENDERTARGETセマンティクスでの、Miplevelsの指定方法を変更</li>
+        </ul>
+        <p><strong>● 0.2.3.0</strong> (2010/12/20) MME Ver0.23</p>
+        <ul>
+            <li>CONTROLOBJECTセマンティクスの補足追記</li>
+        </ul>
+        <p><strong>● 0.2.4.0</strong> (2011/02/09) MME Ver0.24</p>
+        <ul>
+            <li>CONTROLOBJECTセマンティクスに指定できる特殊オブジェクト名に"(self)"を追加</li>
+            <li>TEXTUREVALUEセマンティクスを追加</li>
+        </ul>
+        <p><strong>● 0.2.6.0</strong> (2010/02/21) MME Ver0.26</p>
+        <ul>
+            <li>Draw=Geometryコマンドについての記述を修正</li>
+        </ul>
+        <p><strong>● 0.2.7.0</strong> (2011/05/22) MME Ver0.27</p>
+        <ul>
+            <li>_INDEXセマンティクス追加</li>
+            <li>VertexCountパラメータおよびSubsetCountパラメータを追加</li>
+            <li>opaddパラメータの追加</li>
+            <li>TEXTUREVALUEセマンティクスの補足に追記</li>
+        </ul>
+        <p><strong>● 0.2.8.0</strong> (2012/03/26) MME Ver0.28</p>
+        <ul>
+            <li>CONTROLOBJECTセマンティクスについての記述を一部修正</li>
+        </ul>
+        <p><strong>● 0.3.0.0</strong> (2012/09/19) MME Ver0.30</p>
+        <ul>
+            <li>OFFSCREENRENDERTARGETセマンティクスのDefaultEffectに指定可能な特殊なエフェクト名として"main_default"を追加</li>
+        </ul>
+        <p><strong>● 0.3.3.0</strong> (2013/02/13) MME Ver0.33</p>
+        <ul>
+            <li>テクスチャの材質モーフ用セマンティクス（ADDINGTEXTURE等）追加</li>
+            <li>PMXモデルのサブテクスチャに対応（UseSphereMap, use_spheremap, use_subtexture参照）</li>
+            <li>MATERIALTOONTEXTUREセマンティクス追加</li>
+            <li>GROUNDSHADOWCOLORセマンティクス追加</li>
+            <li>MME_MIPMAPマクロ追加</li>
+        </ul>
+
+
+    </main>
+
+</body>
+
+</html>

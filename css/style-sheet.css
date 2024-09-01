@@ -1,0 +1,103 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    color: #ffffffb7;
+    background-color: #121212;
+    scrollbar-color: #ffffffb7 #1f1f1f;
+}
+
+#top{
+    font-family: 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 20px;
+}
+
+a:link, a:visited {
+    color: #6b8dc0;
+}
+
+nav {
+    width: 350px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #1f1f1f;
+    padding: 20px;
+    padding-left: 10px;
+    overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    box-sizing:border-box; /* 追加 */
+}
+
+nav a {
+    display: block;
+    color: #e0e0e0;
+    padding: 5px;
+    padding-left: 10px;
+    margin-left: 20px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.mainsection {
+    margin-left: 0px;
+}
+
+nav a:hover {
+    background-color: #333333;
+    text-decoration: underline;
+}
+
+main {
+    background-color: #121212;
+    margin-left: 280px;
+    padding-left: 270px;
+    padding-right: 270px;
+    padding-bottom: 120px;
+    overflow-x: hidden;
+}
+
+h1, h2, h3 {
+    margin-left: 20px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    color: #ffffff;
+}
+
+h2, h3, p, ul, pre {
+    margin-left: 80px;
+}
+
+p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+pre {
+    font-family: 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 16px;
+    background-color: #1e1e1e;
+    color: #dcdcdc;
+    padding: 10px;
+    padding-left: 17px;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+/* Small screen adjustments */
+@media (max-width: 768px) {
+    nav {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    main {
+        margin-left: 0;
+    }
+}

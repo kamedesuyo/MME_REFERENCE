@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 テクニックとパス</title>
+    <link rel="stylesheet" href="../css/style-sheet.css">
+</head>
+
+<body>
+    <nav>
+        <a href="../REFERENCE.html" id="top" style="color: aliceblue;">MME REFERENCE</a>
+        <h1>目次</h1>
+        <a class="mainsection" href="section1.html">1.テクニックとパス</a>
+        <a href="section1.html#section1_1">1.1 構成</a>
+        <a href="section1.html#section1_2">1.2 テクニックのアノテーション</a>
+        <a class="mainsection" href="section2.html">2.パラメータのセマンティクスとアノテーション</a>
+        <a href="section2.html#section2_1">2.1 ジオメトリ変換</a>
+        <a href="section2.html#section2_2">2.2 ライトとマテリアル</a>
+        <a href="section2.html#section2_3">2.3 スクリーン情報</a>
+        <a href="section2.html#section2_4">2.4 時間</a>
+        <a href="section2.html#section2_5">2.5 マウス</a>
+        <a href="section2.html#section2_6">2.6 コントロールオブジェクト</a>
+        <a href="section2.html#section2_7">2.7 テクスチャ関連</a>
+        <a href="section2.html#section2_8">2.8 エフェクトファイル</a>
+        <a href="section2.html#section2_9">2.9 特殊パラメータ</a>
+        <a href="section2.html#section2_10">2.10 頂点シェーダセマンティクス</a>
+        <a href="section2.html#section2_11">2.11 マクロ</a>
+        <a class="mainsection" href="section3.html">3.スクリプト</a>
+        <a href="section3.html#section3_1">3.1 コマンド</a>
+        <a class="mainsection" href="section4.html">4.Tips</a>
+        <a href="section4.html#section_4_1">4.1 MMD標準のシェーダを使用する</a>
+        <a href="section4.html#section_4_2">4.2 空のテクニック</a>
+        <a href="section4.html#section_4_3">4.3 オブジェクトの有無でパスをON/OFF</a>
+        <a href="section4.html#section_4_4">4.4 エフェクトファイル間でパラメータを共有</a>
+        <a href="section4.html#section_4_5">4.5 if文</a>
+        <a href="section4.html#section_4_6">4.6 uniformキーワード</a>
+        <a href="section4.html#section_4_7">4.7 エフェクトファイル内での日本語使用</a>
+        <a href="section4.html#section_4_8">4.8 ポストエフェクト</a>
+    </nav>
+
+    <main>
+        <h1 id="section_4">4 Tips</h1>
+
+        <h3 id="section_4_1">● MMD標準のシェーダを使用する</h3>
+        <p>オブジェクトの描画の一部にのみ、エフェクトを使用し、それ以外の描画にはMMD標準のシェーダを使用したい場合には、MMD標準のシェーダを使用したい場面のテクニックを、エフェクトファイルに記述しなければよい。 （<a
+                href="section1.html#section1_2">1.2 テクニックのアノテーション</a>を参照）</p>
+        <pre>
+/* エフェクトファイルにこのテクニックしか無ければ、 オブジェクト描画（セルフシャドウON時）以外はMMD標準のシェーダで描画される */
+  technique Tech1 &lt; string MMDPass = "object_ss"; &gt; {
+      pass Pass1 {
+          ...
+      }
+      pass Pass2 {
+          ...
+      }
+  }</pre>
+        <p>また、パスのデフォルトのシェーダはMMD標準のシェーダであるため、以下のように、パスのVertexShaderやPixelShaderを設定しなければ、そのパスの描画にはMMD標準のシェーダが使用される。</p>
+        <pre>
+technique Tech1 &lt; string MMDPass = "object_ss"; &gt; {
+    pass Pass1 {
+      // VertexShader = xxx
+      // PixelShader  = xxx
+    }
+}
+</pre>
+
+        <h3 id="section_4_2">● 空のテクニック</h3>
+        <p>以下のように、テクニックを空にすると、そのテクニックでは一切描画が行われなくなる。これを利用すると、オブジェクトの一部または全部の描画を抑止することができる。</p>
+        <pre>
+      technique ShadowTech &lt; string MMDPass = "shadow"; &gt; {
+         
+      }
+</pre>
+
+        <h3 id="section_4_3">● オブジェクトの有無でパスをON/OFF</h3>
+            <p>以下のようにスクリプトを記述すると、特定のオブジェクトの表示がONになっている間のみパスを実行させることができる。これは、真偽値true/falseが数値としては1と0に解釈されることを利用している。
+            </p>
+            <pre>
+      bool flag : CONTROLOBJECT &lt; string name = "aaa.x"; &gt;;
+    
+      technique Tech1 &lt;
+          string Script =
+              "LoopByCount=flag;"
+              "Pass=Pass1;"
+              "LoopEnd=;"
+               ; 
+      &gt; {
+          pass Pass1 {
+              ...
+          }
+      }
+</pre>
+
+            <h3 id="section_4_4">● エフェクトファイル間でパラメータを共有</h3>
+                <p>通常、異なるエフェクトファイル間でパラメータは共有されない。しかし、パラメータの宣言に"shared"キーワードを指定することにより、同じ名前のパラメータをエフェクトファイル間で共有することができる。
+                </p>
+                <p>以下の例では、effect1.fxで生成したテクスチャを、effect2.fxから参照できる。このように、両方のパラメータ宣言で"shared"キーワードを指定する必要がある。また、名前だけでなく、型名とセマンティクスも一致させる必要がある。
+                </p>
+                <pre>
+/************** effect1.fx ******************/
+shared texture ShadowBuffer : RENDERCOLORTARGET &
+    float2 ViewPortRatio = {2.0,2.0};
+    int MipLevels = 1;
+    string Format = "A8R8G8B8" ;
+&gt;;
+/********************************************/
+</pre>
+                <pre>
+/************** effect2.fx ******************/
+shared texture ShadowBuffer : RENDERCOLORTARGET;
+/********************************************/
+</pre>
+
+                <h3 id="section_4_5">● if文</h3>
+                    <p>描画を高速にしたければ、シェーダを記述する際に、できるだけif文のような条件分岐は使わないほうがよい。</p>
+                    <p>テクスチャの有無でシェーダの処理を切り替えるような場合、use_textureパラメータを参照して、シェーダ内のif文で条件分岐するより、テクスチャが有るサブセットと無いサブセットとで、テクニック自体を分けてしまうほうが高速に描画できる。
+                    </p>
+
+                    <h3 id="section_4_6">● uniformキーワード</h3>
+                        <p>関数の引数の宣言に"uniform"キーワードを指定すると、その引数の値をコンパイル時の定数として与えることができる。</p>
+                        <p>以下の例では、Basic_PS()内のif文が、コンパイル時に除去されるので、条件分岐による速度低下は避けられる（多分）。</p>
+                        <pre>
+float4 Basic_PS( VS_OUTPUT IN, uniform bool useTexture ) : COLOR0
+{
+    float4 Color = IN.Diffuse;
+    if ( useTexture ) {
+        Color *= tex2D( ObjTexSampler, IN.Tex );
+    }
+    ...
+}
+
+technique TechWithTex {
+    pass P1 {
+        /* useTexture=true でシェーダをコンパイル */
+        PixelShader  = compile ps_2_0 Basic_PS(true);  
+        ...
+    }
+}
+
+technique TechWithoutTex {
+    pass P1 {
+        /* useTexture=false でシェーダをコンパイル */
+        PixelShader  = compile ps_2_0 Basic_PS(false);
+        ...
+    }
+}
+</pre>
+
+                        <h3 id="section_4_7">● エフェクトファイル内での日本語使用</h3>
+                            <p>基本的に、コメント部分以外では、エフェクトファイル中に日本語の文字を使用することは推奨しない。</p>
+                            <p>あえて使用する場合は、文字コードに注意すること。テクスチャ生成用の画像ファイルのパスやコントロールオブジェクトのオブジェクト名など、ファイル名の指定に日本語を使用する場合は、そのエフェクトファイルの文字コードは必ずShift-JISでなければならない。
+                            </p>
+
+                            <h3 id="section_4_8">● ポストエフェクト</h3>
+                                <p>ポストエフェクト用のエフェクトファイルを作成する場合は、以下のパラメータがエフェクトファイル中で宣言されている必要がある。（<a
+                                        href="section2.html#section2_8">2.8 エフェクトファイル STANDARDSGLOBAL</a>を参照）</p>
+                                <pre>
+float Script : STANDARDSGLOBAL &
+    string ScriptOutput = "color";
+    string ScriptClass = "scene";
+    string ScriptOrder = "postprocess";
+&gt; = 0.8;
+</pre>
+                                <p>また、典型的なポストエフェクトでは、テクニックのスクリプトで以下の処理を行う。</p>
+                                <p>(1) レンダリングターゲットを自前のテクスチャに変更し、クリアする。</p>
+                                <pre>
+スクリプト例：
+"RenderColorTarget0=(RENDERCOLORTARGETテクスチャ);"
+"RenderDepthStencilTarget=(RENDERDEPTHSTENCILTARGETテクスチャ);"
+"ClearSetColor=(クリアの色);"
+"ClearSetDepth=(クリアのZ値);"
+"Clear=Color;"
+"Clear=Depth;"
+ </pre>
+                                <p>(2) プリエフェクト，オブジェクト，他のポストエフェクトを描画する。このとき、描画結果は(1)で指定したテクスチャに保存される。</p>
+                                <pre>
+スクリプト例：
+"ScriptExternal=Color;"
+</pre>
+                                <p>(3) レンダリングターゲットを元に戻し、描画結果のテクスチャを入力として、パスを実行する。</p>
+                                <pre>
+スクリプト例：
+"RenderColorTarget0=;"
+"RenderDepthStencilTarget=;"
+"Pass=(パス1);"
+"Pass=(パス2);"
+</pre>
+    </main>
+
+
+</body>
+
+</html>
