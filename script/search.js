@@ -43,7 +43,7 @@ function handleSearch() {
 }
 
 function sanitizeQuery(query) {
-    return query.trim().toLowerCase().replace(/[^ぁ-んァ-ヶ亜-熙a-zA-Z0-9\s]/g, '');
+    return query.trim().toLowerCase().replace(/[^ぁ-んァ-ヶ亜-熙a-zA-Z0-9ー\s]/g, '');
 }
 
 function processSectionData(data, section, query, resultsContainer) {
