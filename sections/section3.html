@@ -10,9 +10,16 @@
 </head>
 
 <body>
-    <button id="navToggle">☰</button>
     <nav id="sidebar">
-        <a href="../index.html" id="top" style="color: aliceblue;">MME REFERENCE</a>
+        <button id="navToggle">☰</button>
+        <div id="top">
+            <a href="../index.html" id="logo">MME REFERENCE</a>
+        </div>
+        <div id="searchContainer">
+            <input type="text" id="searchInput" autocomplete="off" placeholder="検索キーワードを入力">
+            <button id="searchButton">検索</button>
+        </div>
+        <div id="searchResults"></div>
         <h1>目次</h1>
         <a href="section1.html" class="mainsection">1.テクニックとパス</a>
         <a href="section1.html#section1_1">1.1 構成</a>
@@ -170,7 +177,7 @@ technique TShader &lt;
     }
 }</pre>
     </main>
-    <script>document.getElementById('navToggle').addEventListener('click', function () { document.getElementById('sidebar').classList.toggle('show'); });</script>
+    <script src="../script/search.js"></script>  
 </body>
 
 </html>

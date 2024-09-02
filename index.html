@@ -9,9 +9,16 @@
 </head>
 
 <body>
-    <button id="navToggle">☰</button>
     <nav id="sidebar">
-        <a href="index.html" id="top" style="color: aliceblue;">MME REFERENCE</a>
+    <button id="navToggle">☰</button>
+        <div id="top">
+            <a href="index.html" id="logo">MME REFERENCE</a>
+        </div>
+        <div id="searchContainer">
+            <input type="text" id="searchInput" autocomplete="off" placeholder="検索キーワードを入力">
+            <button id="searchButton">検索</button>
+        </div>
+        <div id="searchResults"></div>
         <h1>目次</h1>
         <a href="sections/section1.html" class="mainsection">1.テクニックとパス</a>
         <a href="sections/section1.html#section1_1">1.1 構成</a>
@@ -41,10 +48,11 @@
         <a href="sections/section4.html#section_4_8">4.8 ポストエフェクト</a>
     </nav>
     <main>
-        <h1>MMEffect リファレンス</h1>
+        <h1 id="section0">MMEffect リファレンス</h1>
         <h2>注意</h2>
         <ul>
-            <li>このリファレンスでは、<strong><a href="">MMEffectが認識するセマンティクス＆アノテーションについて解説している。</strong></a>エフェクトファイルそのもののリファレンスについては、以下を参照のこと。
+            <li>このリファレンスでは、<strong><a
+                        href="">MMEffectが認識するセマンティクス＆アノテーションについて解説している。</strong></a>エフェクトファイルそのもののリファレンスについては、以下を参照のこと。
             </li>
 
             <li><a href="http://msdn.microsoft.com/ja-jp/library/bb173005(v=VS.85).aspx">エフェクトファイルフォーマット </a>
@@ -110,7 +118,7 @@
 
 
     </main>
-    <script>document.getElementById('navToggle').addEventListener('click', function() {document.getElementById('sidebar').classList.toggle('show');});</script>
+    <script src="script/search.js"></script>
 </body>
 
 </html>

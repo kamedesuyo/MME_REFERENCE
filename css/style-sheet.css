@@ -8,9 +8,80 @@ body {
     scrollbar-color: #ffffffb7 #1f1f1f;
 }
 
-#top {
+#searchContainer {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    margin-left: 20px;
+    width: calc(100% - 20px); 
+    height: 3.7%; 
+    background-color: #1f1f1f;
+    border-radius: 8px;
+}
+
+#searchInput {
+    padding: 10px;
+    width: 70%;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #1e1e1e;
+    color: #ffffffb7;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+#searchButton{
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color:#0057b3c6;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s ease;
+}
+
+#searchButton:hover { 
+    background-color: #5e789f;
+}
+
+#searchResults {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #1f1f1f;
+    border-radius: 8px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 500px; 
+}
+
+#searchResults a {
+    display: block;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #2a2a2a;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #6b8dc0;
+}
+
+#searchResults a:hover {
+    background-color: #3a3a3a;
+}
+
+#top{
+    margin: 20px;
+    text-align: left;
+}
+
+#logo{
     font-family: 'Fira Code', 'Courier New', Courier, monospace;
-    font-size: 20px;
+    font-size: 24px;
+    display: inline;
+    color: aliceblue;
+    margin: 0px;
+    padding: 0px;
 }
 
 a:link, a:visited {
@@ -40,6 +111,7 @@ nav {
     padding: 20px;
     padding-left: 10px;
     overflow-y: auto;
+    overflow-x: hidden;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
     box-sizing: border-box;
     transition: left 0.3s ease;
@@ -121,9 +193,6 @@ pre {
         width: 350px;
         left: -350px;
     }
-    #top{
-        padding-top: 50px;
-    }
 
     main {
         margin-left: 0;
@@ -133,6 +202,9 @@ pre {
 
     h2, h3, p, ul, pre {
         margin-left: 20px;
+    }
+    #top{
+        margin-top: 45px;
     }
 }
 
@@ -151,9 +223,6 @@ pre {
         padding-left: 10px;
         padding-right: 10px;
     }
-    #top{
-        padding-top: 50px;
-    }
 
     h1, h2, h3 {
         margin-left: 10px;
@@ -161,5 +230,8 @@ pre {
 
     h2, h3, p, ul, pre {
         margin-left: 10px;
+    }
+    #top{
+        margin-top: 45px;
     }
 }
