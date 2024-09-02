@@ -2,6 +2,12 @@ const sections = window.location.pathname.endsWith('index.html')
     ? ['index.html', 'sections/section1.html', 'sections/section2.html', 'sections/section3.html', 'sections/section4.html']
     : ['../sections/section1.html', '../sections/section2.html', '../sections/section3.html', '../sections/section4.html', '../index.html'];
 
+const prefetchedSections = {};
+
+document.addEventListener('DOMContentLoaded', () => {
+    prefetchSections();
+});
+
 document.getElementById('searchButton').addEventListener('click', handleSearch);
 document.getElementById('searchInput').addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
@@ -10,25 +16,34 @@ document.getElementById('searchInput').addEventListener('keydown', function(even
 });
 document.getElementById('navToggle').addEventListener('click', toggleSidebar);
 
+function prefetchSections() {
+    sections.forEach(section => {
+        fetch(section)
+            .then(response => response.text())
+            .then(data => {
+                prefetchedSections[section] = data;
+            })
+            .catch(error => console.error(`セクションの取得エラー: ${section}`, error));
+    });
+}
+
 function handleSearch() {
     const query = sanitizeQuery(document.getElementById('searchInput').value);
     const resultsContainer = document.getElementById('searchResults');
     resultsContainer.innerHTML = '';
 
     if (query) {
-        sections.forEach(section => fetchSectionAndSearch(section, query, resultsContainer));
+        sections.forEach(section => {
+            const data = prefetchedSections[section];
+            if (data) {
+                processSectionData(data, section, query, resultsContainer);
+            }
+        });
     }
 }
 
 function sanitizeQuery(query) {
     return query.trim().toLowerCase().replace(/[^ぁ-んァ-ヶ亜-熙a-zA-Z0-9\s]/g, '');
-}
-
-function fetchSectionAndSearch(section, query, resultsContainer) {
-    fetch(section)
-        .then(response => response.text())
-        .then(data => processSectionData(data, section, query, resultsContainer))
-        .catch(error => console.error(`セクションの取得エラー: ${section}`, error));
 }
 
 function processSectionData(data, section, query, resultsContainer) {
