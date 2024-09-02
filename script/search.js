@@ -2,12 +2,16 @@ const sections = window.location.pathname.endsWith('index.html')
     ? ['index.html', 'sections/section1.html', 'sections/section2.html', 'sections/section3.html', 'sections/section4.html']
     : ['../sections/section1.html', '../sections/section2.html', '../sections/section3.html', '../sections/section4.html', '../index.html'];
 
-document.getElementById('searchButton').addEventListener('click', handleSearch);
-document.getElementById('searchInput').addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        handleSearch();
-    }
+const sectionDataCache = {};
+
+// ページロード時にセクションデータをキャッシュ
+window.addEventListener('load', () => {
+    sections.forEach(section => {
+        fetchSectionData(section);
+    });
 });
+
+document.getElementById('searchButton').addEventListener('click', handleSearch);
 document.getElementById('navToggle').addEventListener('click', toggleSidebar);
 
 function handleSearch() {
@@ -16,7 +20,11 @@ function handleSearch() {
     resultsContainer.innerHTML = '';
 
     if (query) {
-        sections.forEach(section => fetchSectionAndSearch(section, query, resultsContainer));
+        sections.forEach(section => {
+            if (sectionDataCache[section]) {
+                processSectionData(sectionDataCache[section], section, query, resultsContainer);
+            }
+        });
     }
 }
 
@@ -24,10 +32,12 @@ function sanitizeQuery(query) {
     return query.trim().toLowerCase().replace(/[^a-zA-Z0-9\s]/g, '');
 }
 
-function fetchSectionAndSearch(section, query, resultsContainer) {
+function fetchSectionData(section) {
     fetch(section)
         .then(response => response.text())
-        .then(data => processSectionData(data, section, query, resultsContainer))
+        .then(data => {
+            sectionDataCache[section] = data;
+        })
         .catch(error => console.error(`Error fetching section: ${section}`, error));
 }
 
@@ -110,8 +120,3 @@ function findClosestSectionTag(tags, textContent, searchPosition) {
 function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('show');
 }
-document.getElementById('searchInput').addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        handleSearch();
-    }
-});
