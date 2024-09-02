@@ -165,6 +165,8 @@ float4 GroundShadowColor : GROUNDSHADOWCOLOR;</pre>
 
         <h2 id="section_2_2_1">
             <li>●POSITION</li>
+        </h2>
+        <h2 id="section_2_2_2">
             <li>●DIRECTION</li>
         </h2>
         <p>ライトまたはカメラの、ワールド空間内における位置および向き。型は、float3またはfloat4である。</p>
@@ -296,8 +298,8 @@ float4   SphereMulValue    : MULTIPLYINGSPHERETEXTURE;
         <h3>○補足</h3>
         <p>・内部的には、Viewportの.Widthと.Heightの値を参照している。</p>
         <h1 id="section2_4">2.4 時間
-            <h2 id="section_2_4_1">●TIME<br>
-                ●ELAPSEDTIME</h2>
+            <h2 id="section_2_4_1">●TIME<br></h2>
+            <h2 id="section_2_4_2">●ELAPSEDTIME</h2>
 
             <p>時間情報。<br>
                 型はfloat。単位は秒。</p>
@@ -349,9 +351,9 @@ float4   SphereMulValue    : MULTIPLYINGSPHERETEXTURE;
         <h3>○使用例</h3>
         <pre><code>float2 pos : MOUSEPOSITION;</code></pre>
 
-        <h2 id="section_2_5_2">●LEFTMOUSEDOWN<br>
-            ●MIDDLEMOUSEDOWN<br>
-            ●RIGHTMOUSEDOWN</h2>
+        <h2 id="section_2_5_2">●LEFTMOUSEDOWN</h2>
+        <h2 id="section_2_5_3">●MIDDLEMOUSEDOWN</h2>
+        <h2 id="section_2_5_4">●RIGHTMOUSEDOWN</h2>
 
         <p>マウスボタンに関する情報。<br>
             型はfloat4。</p>
@@ -831,7 +833,7 @@ sampler ObjTexSampler = sampler_state {
 };
 </pre>
     </main>
-    <script src="../script/search.js"></script>  
+    <script src="../script/search.js"></script>
 </body>
 
 </html>

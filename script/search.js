@@ -66,17 +66,17 @@ function displaySearchResults(mainContent, section, query, textContent, resultsC
 
     searchPositions.forEach(searchPosition => {
         const { closestSectionTag, closestSectionText, closestSubsectionTag, closestSubsectionTextContent } = findClosestSectionTag(tags, textContent, searchPosition);
-        console.log(`closestSectionTag:${closestSectionTag}, closestSectionText:${closestSectionText}, closestSubsectionTag:${closestSubsectionTag},closestSubsectionTextContent${closestSubsectionTextContent}`)
+        //console.log(`closestSectionTag:${closestSectionTag}, closestSectionText:${closestSectionText}, closestSubsectionTag:${closestSubsectionTag},closestSubsectionTextContent${closestSubsectionTextContent}`)
         
-        // h1 -> h2 -> query
+        
         if (closestSectionTag && closestSubsectionTag) {
             const resultURL = `${section}#${closestSubsectionTag}`;
             resultsContainer.innerHTML += `<a href="${resultURL}">${closestSectionText}<br>${closestSubsectionTextContent}</a><br>`;
-        }// h1 -> query
-        else if(closestSectionTag && !(closestSubsectionTextContent.includes("補足"))){
+        }
+        else if(closestSectionTag){
             const resultURL = `${section}#${closestSectionTag}`;
             resultsContainer.innerHTML += `<a href="${resultURL}">${closestSectionText}<br>${closestSubsectionTextContent}</a><br>`;
-        }// h1 -> query (dosen't exist subsection)
+        }
         else{
             const resultURL = `${section}#${closestSectionTag}`;
             resultsContainer.innerHTML += `<a href="${resultURL}">${closestSectionText}</a><br>`;
