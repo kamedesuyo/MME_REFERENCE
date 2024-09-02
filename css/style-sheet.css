@@ -8,7 +8,7 @@ body {
     scrollbar-color: #ffffffb7 #1f1f1f;
 }
 
-#top{
+#top {
     font-family: 'Fira Code', 'Courier New', Courier, monospace;
     font-size: 20px;
 }
@@ -17,32 +17,51 @@ a:link, a:visited {
     color: #6b8dc0;
 }
 
+#navToggle {
+    display: none;
+    position: fixed;
+    left: 20px;
+    z-index: 1001;
+    background-color: #1f1f1f00;
+    color: #ffffffb7;
+    border: none;
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;    
+}
+
 nav {
     width: 350px;
     position: fixed;
     top: 0;
-    left: 0;
     height: 100%;
     background-color: #1f1f1f;
     padding: 20px;
     padding-left: 10px;
     overflow-y: auto;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-    box-sizing:border-box; /* 追加 */
+    box-sizing: border-box;
+    transition: left 0.3s ease;
+    z-index: 1000;
+}
+
+nav.show {
+    left: 0;
+}
+nav .mainsection{
+    font-weight: 600;
+    font-size: 20px;
+    padding-left: 0px;
 }
 
 nav a {
     display: block;
     color: #e0e0e0;
     padding: 5px;
-    padding-left: 10px;
+    padding-left: 20px;
     margin-left: 20px;
     text-decoration: none;
     transition: background-color 0.3s;
-}
-
-.mainsection {
-    margin-left: 0px;
 }
 
 nav a:hover {
@@ -53,7 +72,7 @@ nav a:hover {
 main {
     background-color: #121212;
     margin-left: 280px;
-    padding-left: 270px;
+    padding-left: 200px;
     padding-right: 270px;
     padding-bottom: 120px;
     overflow-x: hidden;
@@ -90,14 +109,54 @@ pre {
 }
 
 /* Small screen adjustments */
-@media (max-width: 768px) {
+@media (max-width: 1400px) {
+    #navToggle {
+        display: block;
+    }
+
     nav {
-        width: 100%;
-        height: auto;
-        position: relative;
+        width: 350px;
+        left: -350px;
+    }
+    #top{
+        padding-top: 50px;
     }
 
     main {
         margin-left: 0;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    h2, h3, p, ul, pre {
+        margin-left: 20px;
+    }
+}
+
+/* Extra small screen adjustments */
+@media (max-width: 480px) {
+    nav {
+        padding: 10px;
+    }
+
+    nav a {
+        padding-left: 20px;
+        margin-left: 0;
+    }
+
+    main {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    #top{
+        padding-top: 50px;
+    }
+
+    h1, h2, h3 {
+        margin-left: 10px;
+    }
+
+    h2, h3, p, ul, pre {
+        margin-left: 10px;
     }
 }

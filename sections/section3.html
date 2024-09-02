@@ -10,7 +10,8 @@
 </head>
 
 <body>
-    <nav>
+    <nav id="sidebar">
+        <button id="navToggle">☰</button>
         <a href="../index.html" id="top" style="color: aliceblue;">MME REFERENCE</a>
         <h1>目次</h1>
         <a class="mainsection" href="section1.html">1.テクニックとパス</a>
@@ -99,7 +100,7 @@ pass パス名 &lt; string Script = "コマンド; コマンド; ..." ; &gt; { .
                 <p>他のオブジェクトを描画する。このコマンドは、テクニックのスクリプト上でしか使用できない。これは、ポストエフェクト（STANDARDSGLOBALパラメータのScriptOrderアノテーションに"postprocess"が指定されたエフェクトファイル）でのみ実行できる。<br>
                     通常、ポストエフェクトでは、入力用のテクスチャをレンダリングターゲットに設定した上で、そのテクスチャへ、他のオブジェクトをレンダリングさせる。この、他のオブジェクトをレンダリングさせる際に、このコマンドを実行する。（<a
                         href="section4.html#section_4_8">4.8 Tipsポストエフェクト</a>を参照）<br>
-                        ポストエフェクトでは、テクニックのスクリプト上で、必ず1回だけ実行しなければならない。
+                    ポストエフェクトでは、テクニックのスクリプト上で、必ず1回だけ実行しなければならない。
                 </p>
                 </li>
                 <h3>
@@ -169,6 +170,7 @@ technique TShader &lt;
     }
 }</pre>
     </main>
+    <script>document.getElementById('navToggle').addEventListener('click', function () { document.getElementById('sidebar').classList.toggle('show'); });</script>
 </body>
 
 </html>

@@ -10,7 +10,8 @@
 </head>
 
 <body>
-    <nav>
+    <nav id="sidebar">
+        <button id="navToggle">☰</button>
         <a href="../index.html" id="top" style="color: aliceblue;">MME REFERENCE</a>
         <h1>目次</h1>
         <a class="mainsection" href="section1.html">1.テクニックとパス</a>
@@ -399,21 +400,21 @@ static bool is_pressed = (mouse_down.z != 0);</code></pre>
                 オブジェクトの特殊な値を取得したい場合に指定する。<br>
                 <br>
                 以下のうちいずれかを指定する。<br>
-                <li>ボーン名 : PMDモデルの指定ボーンの座標またはワールド変換行列を取得する。型はfloat3,float4,float4x4のうちいずれか。<br></li>
-                <li>表情名　 : PMDモデルの指定した表情の値を取得する。型はfloat。<br></li>
-                <li>"X" : アクセサリの位置X(アクセサリパネルのX)。型はfloat。<br></li>
-                <li>"Y" : アクセサリの位置Y(アクセサリパネルのY)。型はfloat。<br></li>
-                <li>"Z" : アクセサリの位置Z(アクセサリパネルのZ)。型はfloat。<br></li>
-                <li>"XYZ" : アクセサリの位置(アクセサリパネルのX,Y,Z)。型はfloat3。<br></li>
-                <li>"Rx" : アクセサリの回転X(アクセサリパネルのRx)。型はfloat。(※１）<br></li>
-                <li>"Ry" : アクセサリの回転Y(アクセサリパネルのRy)。型はfloat。<br></li>
-                <li>"Rz" : アクセサリの回転Z(アクセサリパネルのRz)。型はfloat。<br></li>
-                <li>"Rxyz" : アクセサリの回転(アクセサリパネルのRx,Ry,Rz)。型はfloat3。<br></li>
-                <li>"Si" : アクセサリのサイズ(アクセサリパネルのSi)。型はfloat。（※２）<br></li>
-                <li>"Tr" : アクセサリの透明度(アクセサリパネルのTr)。型はfloat。<br></li>
-                <br>
-                ※１　得られる値は、パネル上の値をラジアンで表したものである。<br>
-                ※２　得られる値は、パネル上の値を10倍したものである。
+            <li>ボーン名 : PMDモデルの指定ボーンの座標またはワールド変換行列を取得する。型はfloat3,float4,float4x4のうちいずれか。<br></li>
+            <li>表情名　 : PMDモデルの指定した表情の値を取得する。型はfloat。<br></li>
+            <li>"X" : アクセサリの位置X(アクセサリパネルのX)。型はfloat。<br></li>
+            <li>"Y" : アクセサリの位置Y(アクセサリパネルのY)。型はfloat。<br></li>
+            <li>"Z" : アクセサリの位置Z(アクセサリパネルのZ)。型はfloat。<br></li>
+            <li>"XYZ" : アクセサリの位置(アクセサリパネルのX,Y,Z)。型はfloat3。<br></li>
+            <li>"Rx" : アクセサリの回転X(アクセサリパネルのRx)。型はfloat。(※１）<br></li>
+            <li>"Ry" : アクセサリの回転Y(アクセサリパネルのRy)。型はfloat。<br></li>
+            <li>"Rz" : アクセサリの回転Z(アクセサリパネルのRz)。型はfloat。<br></li>
+            <li>"Rxyz" : アクセサリの回転(アクセサリパネルのRx,Ry,Rz)。型はfloat3。<br></li>
+            <li>"Si" : アクセサリのサイズ(アクセサリパネルのSi)。型はfloat。（※２）<br></li>
+            <li>"Tr" : アクセサリの透明度(アクセサリパネルのTr)。型はfloat。<br></li>
+            <br>
+            ※１　得られる値は、パネル上の値をラジアンで表したものである。<br>
+            ※２　得られる値は、パネル上の値を10倍したものである。
             </li>
         </ul>
 
@@ -602,7 +603,8 @@ technique Tech <
             <li><b>float Offset (省略可能)</b>アニメーションの開始時間をずらす。（単位:秒）例えば、2.5を指定すると、アニメーション開始を2.5秒遅らせることができる。デフォルト値は0.0。</li>
             <li><b>float Speed (省略可能)</b> アニメーションの再生スピードを指定する。例えば、2.0を指定すると、アニメーションの速度が2倍になる。デフォルト値は1.0。</li>
             <li><b>string SeekVariable (省略可能)</b> アニメーションのシーク制御を、フレーム時間以外の方法で行う場合に指定する。デフォルトでは、フレーム時間(TIME
-                <SyncInEditMode=true>)に連動してアニメーションする。</li>
+                <SyncInEditMode=true>)に連動してアニメーションする。
+            </li>
         </ul>
 
         <h3>○使用例</h3>
@@ -819,6 +821,7 @@ sampler ObjTexSampler = sampler_state {
 };
 </pre>
     </main>
+    <script>document.getElementById('navToggle').addEventListener('click', function () { document.getElementById('sidebar').classList.toggle('show'); });</script>
 </body>
 
 </html>
