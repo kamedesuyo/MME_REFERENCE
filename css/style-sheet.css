@@ -21,7 +21,7 @@ a:link, a:visited {
     display: none;
     position: fixed;
     left: 10px;
-    z-index: 1001;
+    z-index: 1002;
     background-color: #1f1f1f50;
     color: #ffffff;
     border: none;
@@ -70,6 +70,8 @@ nav a:hover {
 }
 
 main {
+    z-index: 1;
+    position: relative; /* 必要に応じて追加 */
     background-color: #121212;
     margin-left: 280px;
     padding-left: 200px;
