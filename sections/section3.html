@@ -10,8 +10,8 @@
 </head>
 
 <body>
+    <button id="navToggle">☰</button>
     <nav id="sidebar">
-        <button id="navToggle">☰</button>
         <div id="top">
             <a href="../index.html" id="logo">MME REFERENCE</a>
         </div>
@@ -60,64 +60,64 @@ pass パス名 &lt; string Script = "コマンド; コマンド; ..." ; &gt; { .
         <p>ポストエフェクトなどの特殊な処理をしないのであれば、通常、スクリプトの指定は不要である。テクニックのスクリプトを省略した場合、単にテクニックのパスが順に実行される。また、パスのスクリプトを省略した場合、"Draw=Geometry"が実行される。
         </p>
 
-        <h1 id="section3_1">3.1 コマンド</h2>
+        <h1 id="section3_1">3.1 コマンド</h1>
             <ul>
-                <h3>
+                <h2 id="section3_1_1">
                     <li><strong>RenderColorTarget(0~3) = (テクスチャ名 or 空白)</strong>
-                </h3>
+                </h2>
                 <p>レンダリングターゲットを設定する。RenderColorTargetは、RenderColorTarget0の別名である。<br>
                     通常、RenderDepthStencilTargetコマンドとセットで使用する。また、RenderColorTarget1～3は単独で使用することはできず、必ずRenderColorTarget0とセットで使用する。<br><br>
                     引数には、RENDERCOLORTARGETセマンティクスで宣言されたtextureパラメータの名前を指定する。デフォルトのレンダリングターゲットにリセットする場合は、空白を指定する。<br><br>
                     なお、設定されたレンダリングターゲットは、再度これらのコマンドを実行しなければ、テクニックの処理完了まで変更されたままである。
                 </p>
                 </li>
-                <h3>
+                <h2 id="section3_1_2">
                     <li><strong>RenderDepthStencilTarget = (テクスチャ名 or 空白)</strong>
-                </h3>
+                </h2>
                 <p>深度ステンシルサーフェイス（いわゆるZバッファ）を設定する。通常、RenderColorTarget0コマンドとセットで使用する。<br>
                     引数には、RENDERDEPTHSTENCILTARGETセマンティクスで宣言されたtextureパラメータの名前を指定する。<br><br>
                     デフォルトの深度ステンシルサーフェイスにリセットする場合は、空白を指定する。
                 </p>
                 </li>
-                <h3>
+                <h2 id="section3_1_3">
                     <li><strong>ClearSetColor = (パラメータ名)</strong>
-                </h3>
+                </h2>
                 <p>レンダリングターゲットをクリアする色を設定する。（まだクリアはしない）引数には、float4型のパラメータの名前を指定する。このパラメータに設定された値が、レンダリングターゲットをクリアする色となる。
                 </p>
                 </li>
-                <h3>
+                <h2 id="section3_1_4">
                     <li><strong>ClearSetDepth = (パラメータ名)</strong>
-                </h3>
+                </h2>
                 <p>深度ステンシルサーフェイスをクリアするZ値を設定する。（まだクリアはしない）引数には、float型のパラメータの名前を指定する。このパラメータに設定された値が、深度ステンシルサーフェイスをクリアするZ値となる。
                 </p>
                 </li>
-                <h3>
+                <h2 id="section3_1_5">
                     <li><strong>Clear = Color</strong>
-                </h3>
+                </h2>
                 <p>レンダリングターゲットをクリアする。クリアする色には、ClearSetColorコマンドで設定された値が使用される。</p>
                 </li>
-                <h3>
+                <h2 id="section3_1_6">
                     <li><strong>Clear = Depth</strong>
-                </h3>
+                </h2>
                 <p>深度ステンシルサーフェイスをクリアする。クリアするZ値には、ClearSetDepthコマンドで設定された値が使用される。</p>
                 </li>
-                <h3>
+                <h2 id="section3_1_7">
                     <li><strong>ScriptExternal = Color</strong>
-                </h3>
+                </h2>
                 <p>他のオブジェクトを描画する。このコマンドは、テクニックのスクリプト上でしか使用できない。これは、ポストエフェクト（STANDARDSGLOBALパラメータのScriptOrderアノテーションに"postprocess"が指定されたエフェクトファイル）でのみ実行できる。<br>
                     通常、ポストエフェクトでは、入力用のテクスチャをレンダリングターゲットに設定した上で、そのテクスチャへ、他のオブジェクトをレンダリングさせる。この、他のオブジェクトをレンダリングさせる際に、このコマンドを実行する。（<a
                         href="section4.html#section_4_8">4.8 Tipsポストエフェクト</a>を参照）<br>
                     ポストエフェクトでは、テクニックのスクリプト上で、必ず1回だけ実行しなければならない。
                 </p>
                 </li>
-                <h3>
+                <h2 id="section3_1_8">
                     <li><strong>Pass = (パス名)</strong>
-                </h3>
+                </h2>
                 <p>指定したパスを実行する。このコマンドは、テクニックのスクリプト上でしか使用できない。テクニックにスクリプトを指定した場合、明示的にこのコマンドを使用しない限り、いずれのパスも実行されない。</p>
                 </li>
-                <h3>
+                <h2 id="section3_1_9">
                     <li><strong>LoopByCount = (パラメータ名)</strong>・<strong>LoopEnd=</strong>
-                </h3>
+                </h2>
                 <p>指定した回数だけ、スクリプトの一部をループする。このコマンドは、テクニックのスクリプト上でしか使用できない。<br>
                     引数には、数値型（int,bool,float）のパラメータの名前を指定する。このパラメータに設定された値の回数だけ、LoopByCountからLoopEndまでにあるコマンド列が繰り返し実行される。ループはネスト可能である。以下の例では、3回パスp0が実行された後、パスp1が実行される。
                 </p>
@@ -133,26 +133,26 @@ technique TShader &lt;
 &gt; {
 </pre>
                 </li>
-                <h3>
+                <h2 id="section3_1_10">
                     <li><strong>LoopGetIndex = (パラメータ名)</strong>
-                </h3>
+                </h2>
                 <p>ループ中のループカウンタの値を、指定したパラメータに設定する。このコマンドは、LoopByCountからLoopEndまでの間でしか使用できない。</p>
                 </li>
-                <h3>
+                <h2 id="section3_1_11">
                     <li><strong>Draw = Geometry</strong>
-                </h3>
+                </h2>
                 <p>オブジェクトを描画する。このコマンドは、パスのスクリプト上でしか使用できない。パスのスクリプトを省略した場合、このコマンドが実行される。STANDARDSGLOBALのScriptClassに"scene"を指定している場合、このコマンドを実行してはならない。
                 </p>
                 </li>
-                <h3>
+                <h2 id="section3_1_12">
                     <li><strong>Draw = Buffer</strong>
-                </h3>
+                </h2>
                 <p>レンダリングターゲットのスクリーンと一致するサイズの、長方形のポリゴンを描画する。このコマンドは、パスのスクリプト上でしか使用できない。ポストエフェクトやプリエフェクトで使用する。STANDARDSGLOBALのScriptClassに"object"を指定している場合、このコマンドを実行してはならない。
                 </p>
                 </li>
-                <h3>
+                <h2 id="section3_1_13">
                     <li><strong>RenderPort = *</strong>
-                </h3>
+                </h2>
                 <p>未対応。</p>
                 </li>
             </ul>

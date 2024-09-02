@@ -10,8 +10,8 @@
 </head>
 
 <body>
+    <button id="navToggle">☰</button>
     <nav id="sidebar">
-        <button id="navToggle">☰</button>
         <div id="top">
             <a href="../index.html" id="logo">MME REFERENCE</a>
         </div>
@@ -163,7 +163,7 @@ float4 GroundShadowColor : GROUNDSHADOWCOLOR;</pre>
             <li>その他の各色値は、MMDPass="zplot"またはMMDPass="edge"のTechniqueにおいては、正しく取得できない。</li>
         </ul>
 
-        <h2>
+        <h2 id="section_2_2_1">
             <li>●POSITION</li>
             <li>●DIRECTION</li>
         </h2>
@@ -181,7 +181,7 @@ float3 CameraPosition : POSITION  &lt; string Object = "Camera"; &gt;;
         <h3>○補足</h3>
         <p>MMDのライトは、ディレクショナルライトであるため、ライトの位置座標は、ライトの向きと逆方向の無限遠点になる。</p>
 
-        <h2>●MATERIALTEXTURE</h2>
+        <h2 id="section_2_2_2">●MATERIALTEXTURE</h2>
         <p>マテリアルに設定されているテクスチャ。</p>
 
         <h3>○アノテーション</h3>
@@ -205,7 +205,7 @@ sampler ObjTexSampler = sampler_state
         <h3>○補足</h3>
         <p>・各色値は、MMDPass="zplot"またはMMDPass="edge"のTechniqueにおいては、正しく取得できない。</p>
 
-        <h2>●MATERIALSPHEREMAP</h2>
+        <h2 id="section_2_2_3">●MATERIALSPHEREMAP</h2>
         <p>マテリアルに設定されている、スフィアマップテクスチャ。</p>
 
         <h3>○アノテーション</h3>
@@ -229,7 +229,7 @@ sampler ObjSphSampler = sampler_state
         <h3>○補足</h3>
         <p>・各色値は、MMDPass="zplot"またはMMDPass="edge"のTechniqueにおいては、正しく取得できない。</p>
 
-        <h2>●MATERIALTOONTEXTURE</h2>
+        <h2 id="section_2_2_4">●MATERIALTOONTEXTURE</h2>
         <p>マテリアルに設定されている、トゥーンマップテクスチャ。</p>
 
         <h3>○アノテーション</h3>
@@ -257,10 +257,10 @@ sampler ObjToonSampler = sampler_state
             <li>PMDモデルにおいて、トゥーンを使用しないマテリアルの場合は、全面白色のテクスチャとなる。</li>
         </ul>
 
-        <h2>●ADDINGTEXTURE</h2>
-        <h2>●MULTIPLYINGTEXTURE</h2>
-        <h2>●ADDINGSPHERETEXTURE</h2>
-        <h2>●MULTIPLYINGSPHERETEXTURE</h2>
+        <h2 id="section_2_2_4">●ADDINGTEXTURE</h2>
+        <h2 id="section_2_2_5">●MULTIPLYINGTEXTURE</h2>
+        <h2 id="section_2_2_6">●ADDINGSPHERETEXTURE</h2>
+        <h2 id="section_2_2_7">●MULTIPLYINGSPHERETEXTURE</h2>
 
         <p>PMX材質モーフのための、テクスチャおよびスフィアマップのテクスチャに対しての、加算値および乗算値。</p>
 
@@ -281,7 +281,7 @@ float4   SphereMulValue    : MULTIPLYINGSPHERETEXTURE;
         </ul>
 
         <h1 id="section2_3">2.3 スクリーン情報</h1>
-        <h3>VIEWPORTPIXELSIZE</h3>
+        <h2 id="section2_3_1">●VIEWPORTPIXELSIZE</h2>
 
         <p>レンダリングターゲットのスクリーンのサイズ。型はfloat2。単位はピクセル。</p>
         <p>※この値は、MMDのスクリーンもしくはオフスクリーンレンダリングターゲットのサイズを指す</p>
@@ -296,7 +296,7 @@ float4   SphereMulValue    : MULTIPLYINGSPHERETEXTURE;
         <h3>○補足</h3>
         <p>・内部的には、Viewportの.Widthと.Heightの値を参照している。</p>
         <h1 id="section2_4">2.4 時間
-            <h2>●TIME<br>
+            <h2 id="section_2_4_1">●TIME<br>
                 ●ELAPSEDTIME</h2>
 
             <p>時間情報。<br>
@@ -335,7 +335,7 @@ float4   SphereMulValue    : MULTIPLYINGSPHERETEXTURE;
 
         <h1 id="section2_5">2.5 マウス</h1>
 
-        <h2>●MOUSEPOSITION</h2>
+        <h2 id="section_2_5_1">●MOUSEPOSITION</h2>
 
         <p>マウスの現在位置。<br>
             型はfloat2。</p>
@@ -349,7 +349,7 @@ float4   SphereMulValue    : MULTIPLYINGSPHERETEXTURE;
         <h3>○使用例</h3>
         <pre><code>float2 pos : MOUSEPOSITION;</code></pre>
 
-        <h2>●LEFTMOUSEDOWN<br>
+        <h2 id="section_2_5_2">●LEFTMOUSEDOWN<br>
             ●MIDDLEMOUSEDOWN<br>
             ●RIGHTMOUSEDOWN</h2>
 
@@ -374,7 +374,7 @@ static bool is_pressed = (mouse_down.z != 0);</code></pre>
 
         <h1 id="section2_6">2.6 コントロールオブジェクト</h1>
 
-        <h2>●CONTROLOBJECT</h2>
+        <h2 id="section_2_6_1">●CONTROLOBJECT</h2>
 
         <p>指定したオブジェクトの、座標やワールド変換行列を取得する。<br>
             主に、シェーダに必要なパラメータをMMD上から制御する場合に使用する。</p>
@@ -800,7 +800,7 @@ int VertexCount;
         <p>・MMDPass="object","object_ss"以外の場合、これらのパラメータに正しい値が設定される保証はない。</p>
         <h1 id="section2_10">2.10 頂点シェーダセマンティクス</h1>
 
-        <h2>●_INDEX</h2>
+        <h2 id="section_2_10_1">●_INDEX</h2>
         <p>頂点シェーダにおいて、頂点のインデックス値を取得するためのセマンティクス。頂点シェーダの入力パラメータで使用できる。型はint。</p>
 
         <h3>○使用例</h3>
@@ -819,7 +819,7 @@ VS_OUTPUT Basic_VS(float4 Pos : POSITION, int index: _INDEX) {
         <h3>○補足</h3>
         <p>・頂点シェーダに渡す過程で一旦float型に変換しているため、インデックス値が 2^24=16777216 を超えると、正確な値を取得できない。</p>
         <h1 id="section2_11">2.11 マクロ</h1>
-        <h2>●MME_MIPMAP</h2>
+        <h2 id="section_2_11_1">●MME_MIPMAP</h2>
         <p>MMDが、テクスチャのミップマップに対応している場合に定義される。</p>
         <h3>○使用例</h3>
         <pre>
