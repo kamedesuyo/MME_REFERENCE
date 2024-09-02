@@ -20,9 +20,9 @@ a:link, a:visited {
 #navToggle {
     display: none;
     position: fixed;
-    left: 20px;
+    left: 10px;
     z-index: 1001;
-    background-color: #1f1f1fc9;
+    background-color: #1f1f1f50;
     color: #ffffff;
     border: none;
     padding: 10px;
@@ -111,7 +111,7 @@ pre {
 /* Small screen adjustments */
 @media (max-width: 1400px) {
     #navToggle {
-        display: block;
+        display: block !important;
     }
 
     nav {
