@@ -2,16 +2,12 @@ const sections = window.location.pathname.endsWith('index.html')
     ? ['index.html', 'sections/section1.html', 'sections/section2.html', 'sections/section3.html', 'sections/section4.html']
     : ['../sections/section1.html', '../sections/section2.html', '../sections/section3.html', '../sections/section4.html', '../index.html'];
 
-const sectionDataCache = {};
-
-// ページロード時にセクションデータをキャッシュ
-window.addEventListener('load', () => {
-    sections.forEach(section => {
-        fetchSectionData(section);
-    });
-});
-
 document.getElementById('searchButton').addEventListener('click', handleSearch);
+document.getElementById('searchInput').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        handleSearch();
+    }
+});
 document.getElementById('navToggle').addEventListener('click', toggleSidebar);
 
 function handleSearch() {
@@ -20,25 +16,19 @@ function handleSearch() {
     resultsContainer.innerHTML = '';
 
     if (query) {
-        sections.forEach(section => {
-            if (sectionDataCache[section]) {
-                processSectionData(sectionDataCache[section], section, query, resultsContainer);
-            }
-        });
+        sections.forEach(section => fetchSectionAndSearch(section, query, resultsContainer));
     }
 }
 
 function sanitizeQuery(query) {
-    return query.trim().toLowerCase().replace(/[^a-zA-Z0-9\s]/g, '');
+    return query.trim().toLowerCase().replace(/[^ぁ-んァ-ヶ亜-熙a-zA-Z0-9\s]/g, '');
 }
 
-function fetchSectionData(section) {
+function fetchSectionAndSearch(section, query, resultsContainer) {
     fetch(section)
         .then(response => response.text())
-        .then(data => {
-            sectionDataCache[section] = data;
-        })
-        .catch(error => console.error(`Error fetching section: ${section}`, error));
+        .then(data => processSectionData(data, section, query, resultsContainer))
+        .catch(error => console.error(`セクションの取得エラー: ${section}`, error));
 }
 
 function processSectionData(data, section, query, resultsContainer) {
@@ -49,9 +39,14 @@ function processSectionData(data, section, query, resultsContainer) {
 
     const textContent = mainContent.toLowerCase();
 
-    if (textContent.includes(query)) {
+    if (partialMatch(textContent, query)) {
         displaySearchResults(mainContent, section, query, textContent, resultsContainer);
     }
+}
+
+function partialMatch(text, query) {
+    const words = query.split(/\s+/);
+    return words.every(word => text.includes(word));
 }
 
 function parseHTML(data) {
@@ -74,47 +69,58 @@ function displaySearchResults(mainContent, section, query, textContent, resultsC
     const tags = [...tempDiv.querySelectorAll('[id^="section"], h2, h3')];
 
     searchPositions.forEach(searchPosition => {
-        const { closestSectionTag, closestSectionText, closestText } = findClosestSectionTag(tags, textContent, searchPosition);
+        const { closestSubsectionTag, closestSectionText, closestSubsectionTextContent } = findClosestSectionTag(tags, textContent, searchPosition);
 
-        if (closestSectionTag) {
-            const resultURL = `${section}#${closestSectionTag}`;
-            resultsContainer.innerHTML += `<a href="${resultURL}">${closestSectionText}<br>-${closestText}</a><br>`;
+        if (closestSubsectionTag) {
+            const resultURL = `${section}#${closestSubsectionTag}`;
+            resultsContainer.innerHTML += `<a href="${resultURL}">${closestSectionText}<br>${closestSubsectionTextContent ? closestSubsectionTextContent : ""}</a><br>`;
         }
     });
 }
 
 function getSearchPositions(textContent, query) {
     const positions = [];
-    let position = textContent.indexOf(query);
-    while (position !== -1) {
-        positions.push(position);
-        position = textContent.indexOf(query, position + 1);
+    const regex = new RegExp(query.split(/\s+/).join('|'), 'gi');
+    let match;
+    while ((match = regex.exec(textContent)) !== null) {
+        positions.push(match.index);
     }
     return positions;
 }
 
 function findClosestSectionTag(tags, textContent, searchPosition) {
-    let closestSectionTag = '';
     let closestSectionText = '';
     let closestDistance = Infinity;
-    let closestText = '';
+
+    let closestSubsectionTextContent = '';
+    let closestSubsectionTag = '';
+    let closestSubsectionDistance = Infinity;
 
     tags.forEach(tag => {
-        const tagPosition = textContent.indexOf(tag.textContent.toLowerCase());
+        const tagText = tag.textContent.toLowerCase();
+        const tagPosition = textContent.indexOf(tagText);
+
         if (tagPosition !== -1 && tagPosition < searchPosition) {
             const distance = searchPosition - tagPosition;
-            if (distance < closestDistance) {
-                closestDistance = distance;
-                if (tag.id) {
-                    closestSectionTag = tag.id;
+
+            if (tag.tagName === 'H1' && tag.id.startsWith('section')) {
+                if (distance < closestDistance) {
+                    closestDistance = distance;
                     closestSectionText = tag.textContent;
                 }
-                closestText = tag.textContent;
+            }
+
+            if (tag.tagName === 'H2' || tag.tagName === 'H3') {
+                if (distance < closestSubsectionDistance) {
+                    closestSubsectionDistance = distance;
+                    closestSubsectionTag = tag.id;
+                    closestSubsectionTextContent = tag.textContent;
+                }
             }
         }
     });
 
-    return { closestSectionTag, closestSectionText, closestText };
+    return { closestSubsectionTag, closestSectionText, closestSubsectionTextContent };
 }
 
 function toggleSidebar() {
