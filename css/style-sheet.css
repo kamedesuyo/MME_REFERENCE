@@ -26,6 +26,7 @@ a:link, a:visited {
     color: #ffffff;
     border: none;
     padding: 10px;
+    padding-top: 10px;
     font-size: 20px;
     cursor: pointer;    
 }
